@@ -14,8 +14,6 @@
     --color-black: #333;
     --color-text-pink: #0091ea;   
     --color-heart: #00b0ff;       
-    --color-bg-letter: #f1faff;   
-    --color-border: #b3e5fc;      
 }
 
 body {
@@ -27,92 +25,79 @@ body {
     font-family: "Sriracha", cursive;
 }
 
-/* Blue Filter for pink decorations */
-.balloon_one, .balloon_two, .decorate_bottom, .decorate_flower--one, .decorate_flower--two, .decorate_flower--three {
-    filter: hue-rotate(180deg) brightness(1.1);
-}
-
+/* Force everything to the center */
 #wrapper {
     position: relative;
     width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center; /* This centers everything horizontally */
+    align-items: center; 
+    justify-content: flex-start;
+    padding: 20px 10px;
     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent), 
                       linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent);
     background-size: 50px 50px;
 }
 
+/* This is the container that holds the text and the photo */
 .content {
     width: 100%;
-    max-width: 1200px;
+    max-width: 600px; /* Constrains width on mobile so it doesn't stretch */
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column; /* VERTICAL STACK FOR MOBILE */
     align-items: center;
-    padding: 2rem;
-    gap: 50px;
-    flex-grow: 1;
+    gap: 20px;
+    margin-top: 40px;
 }
 
-/* LEFT SIDE: Text and Buttons */
-.content .left {
+.left, .right {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
     text-align: center;
 }
 
-/* RIGHT SIDE: Profile Image */
-.content .right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
+/* TITLE FIX */
 .title {
     font-family: "Titan One", sans-serif;
-    font-size: clamp(2rem, 8vw, 4rem);
+    font-size: clamp(2.5rem, 12vw, 4rem); /* Sizes down for small phones */
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .title .happy { color: #fff; text-shadow: 3px 3px 0 #000; }
 .title .birthday { color: var(--color-text-pink); text-shadow: 3px 3px 0 #000; }
 
-.date__of__birth {
+/* BUTTONS & DATE */
+.date__of__birth, #btn__letter {
+    width: 280px;
+    height: 50px;
     background: var(--color-text-pink);
     border: 3px solid #000;
-    padding: 10px 40px;
+    padding: 10px;
     border-radius: 50px;
     color: #fff;
     font-weight: bold;
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 15px;
 }
 
-#btn__letter {
-    background: var(--color-heart);
-    border: 3px solid #000;
-    padding: 10px 25px;
-    border-radius: 50px;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.3s;
-}
+#btn__letter { background: var(--color-heart); }
 
-#btn__letter:hover { transform: scale(1.1); background: #0091ea; }
-
-/* THE IMAGE CIRCLE */
+/* IMAGE FIX */
 .content .right .image {
-    width: clamp(250px, 40vw, 400px);
-    height: clamp(250px, 40vw, 400px);
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     border: 6px solid #000;
     overflow: hidden;
     position: relative;
-    z-index: 2;
+    margin-top: 20px;
 }
 
 .content .right .image img {
@@ -125,58 +110,50 @@ body {
 .name {
     background: var(--color-text-pink);
     border: 3px solid #000;
-    padding: 5px 30px;
+    padding: 8px 30px;
     border-radius: 50px;
     color: #fff;
     font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    margin-top: -20px;
-    z-index: 3;
+    font-size: 1.8rem;
+    margin-top: -25px;
+    z-index: 10;
 }
 
-/* FLOATING BIRTHDAY CIRCLE */
+/* DECORATIONS - Balloons and Circle */
+.balloon_one, .balloon_two {
+    filter: hue-rotate(180deg);
+    position: fixed; /* Keeps balloons from moving layout */
+    z-index: 1;
+    width: 80px;
+}
+
+.balloon_one { left: 5%; top: 10%; }
+.balloon_two { right: 5%; bottom: 10%; }
+
 .cricle {
     position: absolute;
     top: -20px;
-    right: -20px;
-    z-index: 4;
+    right: 0;
+    transform: scale(0.8);
 }
 
 .text__cricle {
-    width: 100px;
-    height: 100px;
+    width: 100px; height: 100px;
     background: var(--color-text-pink);
-    border: 4px solid #000;
+    border: 3px solid #000;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: rotateCricle 10s linear infinite;
+    animation: rotate 10s linear infinite;
 }
 
-@keyframes rotateCricle { to { transform: rotate(360deg); } }
+@keyframes rotate { to { transform: rotate(360deg); } }
 
-/* MOBILE RESPONSIVE FIX */
-@media screen and (max-width: 768px) {
+/* DESKTOP LAYOUT (Side-by-side) */
+@media screen and (min-width: 900px) {
     .content {
-        flex-direction: column; /* Stacks everything in one center line */
-        padding-top: 4rem;
-        gap: 20px;
+        flex-direction: row;
+        max-width: 1000px;
+        gap: 60px;
+        margin-top: 100px;
     }
-    
-    .title { order: 1; }
-    .date__of__birth { order: 2; }
-    #btn__letter { order: 3; }
-    .content .right { order: 4; margin-top: 20px; }
-
-    .cricle {
-        right: 0;
-        top: -40px;
-        transform: scale(0.8);
-    }
-}
-
-#copy {
-    padding: 20px;
-    text-align: center;
+    .left, .right { width: 50%; }
 }
