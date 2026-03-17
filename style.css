@@ -14,39 +14,51 @@
     --color-black: #333;
     --color-text-pink: #0091ea;   
     --color-heart: #00b0ff;       
+    --color-bg-letter: #f1faff;   
+    --color-border: #b3e5fc;      
 }
 
 body {
-    background-color: var(--color-pink);
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
+    background-color: var(--color-pink);
     overflow-x: hidden;
     font-family: "Sriracha", cursive;
 }
 
+/* Apply blue theme to pink assets */
+.balloon_one, .balloon_two, .decorate_bottom, .decorate_flower--one, .decorate_flower--two, .decorate_flower--three, [src*="decorate.png"] {
+    filter: hue-rotate(180deg) brightness(1.1);
+}
+
 #wrapper {
+    position: relative;
     width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Forces total horizontal centering */
-    padding: 40px 10px;
+    align-items: center; 
     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent), 
                       linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent);
     background-size: 50px 50px;
 }
 
-/* THE CONTAINER */
 .content {
-    display: flex;
-    flex-direction: column; /* Force vertical stack by default */
-    align-items: center;
-    gap: 30px;
     width: 100%;
     max-width: 1200px;
+    display: flex;
+    flex-direction: column; /* Changed to column for mobile priority */
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    gap: 30px;
+    flex-grow: 1;
+    z-index: 5;
 }
 
-/* INDIVIDUAL SECTIONS */
-.left, .right {
+/* Center containers */
+.content .left, .content .right {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,90 +66,107 @@ body {
     width: 100%;
 }
 
-/* TITLE STYLING */
 .title {
     font-family: "Titan One", sans-serif;
-    font-size: clamp(2.5rem, 10vw, 4.5rem);
-    line-height: 1;
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 10px;
 }
+
 .title .happy { color: #fff; text-shadow: 3px 3px 0 #000; }
 .title .birthday { color: var(--color-text-pink); text-shadow: 3px 3px 0 #000; }
 
-/* DATE & BUTTON */
-.date__of__birth, #btn__letter {
-    width: 280px;
-    height: 55px;
-    border: 3px solid #000;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    background-color: var(--color-text-pink);
-}
-
-#btn__letter { background-color: var(--color-heart); }
-
-/* PHOTO SECTION */
-.right .image {
-    width: clamp(280px, 80vw, 400px);
-    height: clamp(280px, 80vw, 400px);
-    border-radius: 50%;
-    border: 6px solid #000;
-    overflow: hidden;
-    position: relative;
-    background: #fff;
-}
-
-.right .image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* NAME LABEL */
-.name {
+.date__of__birth {
     background: var(--color-text-pink);
     border: 3px solid #000;
     padding: 10px 40px;
     border-radius: 50px;
     color: #fff;
-    font-family: 'Dancing Script', cursive;
-    font-size: 2rem;
-    margin-top: -30px; /* Overlaps photo cleanly */
-    z-index: 10;
+    font-weight: bold;
+    margin-bottom: 10px;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
 }
 
-/* ROTATING BIRTHDAY CIRCLE */
+#btn__letter {
+    background: var(--color-heart);
+    border: 3px solid #000;
+    padding: 12px 30px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#btn__letter:hover { transform: scale(1.05); background: #0091ea; }
+
+/* IMAGE STYLING */
+.content .right .image {
+    width: clamp(280px, 70vw, 400px);
+    height: clamp(280px, 70vw, 400px);
+    border-radius: 50%;
+    border: 6px solid #000;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+}
+
+.content .right .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name {
+    background: var(--color-text-pink);
+    border: 3px solid #000;
+    padding: 8px 35px;
+    border-radius: 50px;
+    color: #fff;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-top: -25px; /* Overlaps bottom of circle */
+    z-index: 10;
+    position: relative;
+}
+
+/* FLOATING DECORATION */
 .cricle {
     position: absolute;
-    top: 0;
+    top: -10px;
     right: 5%;
+    z-index: 11;
 }
 
 .text__cricle {
-    width: 100px; height: 100px;
+    width: 90px;
+    height: 90px;
     background: var(--color-text-pink);
     border: 3px solid #000;
     border-radius: 50%;
-    animation: rotate 10s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotateCricle 12s linear infinite;
 }
 
-@keyframes rotate { to { transform: rotate(360deg); } }
+@keyframes rotateCricle { to { transform: rotate(360deg); } }
 
-/* Fix blue assets */
-.balloon_one, .balloon_two, [src*="decorate.png"] {
-    filter: hue-rotate(180deg) brightness(1.1);
-}
-
-/* DESKTOP VIEW - Only use 2 columns if the screen is wide enough */
+/* Desktop View: Return to side-by-side */
 @media screen and (min-width: 900px) {
     .content {
         flex-direction: row;
-        padding-top: 50px;
+        gap: 80px;
     }
-    .left, .right { width: 50%; }
+    .content .left, .content .right {
+        width: 50%;
+    }
+}
+
+#copy {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
 }
