@@ -14,85 +14,108 @@
     --color-black: #333;
     --color-text-pink: #0091ea;   
     --color-heart: #00b0ff;       
+    --color-bg-letter: #f1faff;   
+    --color-border: #b3e5fc;      
 }
 
 body {
-    background-color: var(--color-pink);
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Start from top to allow scrolling */
+    background-color: var(--color-pink);
     overflow-x: hidden;
+    font-family: "Sriracha", cursive;
+}
+
+/* Blue Filter for pink decorations */
+.balloon_one, .balloon_two, .decorate_bottom, .decorate_flower--one, .decorate_flower--two, .decorate_flower--three {
+    filter: hue-rotate(180deg) brightness(1.1);
 }
 
 #wrapper {
     position: relative;
     width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Horizontally center everything */
-    padding: 20px 0;
+    align-items: center; /* This centers everything horizontally */
     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent), 
                       linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent);
-    background-size: 60px 60px;
+    background-size: 50px 50px;
 }
 
-/* Force everything into a vertical line */
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
-    gap: 20px;
-    z-index: 5;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    gap: 50px;
+    flex-grow: 1;
 }
 
-.left, .right {
+/* LEFT SIDE: Text and Buttons */
+.content .left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100% !important; /* Overrides original width */
-    position: relative;
-}
-
-/* TITLE STYLING */
-.title {
-    font-family: "Titan One", sans-serif;
-    font-size: clamp(2.5rem, 10vw, 4rem);
     text-align: center;
 }
 
-.title .happy { color: #fff; text-shadow: 4px 4px 0 #000; }
-.title .birthday { color: var(--color-text-pink); text-shadow: 4px 4px 0 #000; }
-
-/* DATE AND BUTTON */
-.date__of__birth, #btn__letter {
-    width: 280px; /* Fixed width for better centering */
-    height: 50px;
-    border: 3px solid #000;
-    border-radius: 50px;
+/* RIGHT SIDE: Profile Image */
+.content .right {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    font-family: "Sriracha", cursive;
-    color: #fff;
-    background-color: var(--color-text-pink);
-    margin: 10px 0;
-    text-decoration: none;
+    position: relative;
 }
 
-/* IMAGE SECTION */
-.right .image {
-    width: 300px;
-    height: 300px;
+.title {
+    font-family: "Titan One", sans-serif;
+    font-size: clamp(2rem, 8vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.title .happy { color: #fff; text-shadow: 3px 3px 0 #000; }
+.title .birthday { color: var(--color-text-pink); text-shadow: 3px 3px 0 #000; }
+
+.date__of__birth {
+    background: var(--color-text-pink);
+    border: 3px solid #000;
+    padding: 10px 40px;
+    border-radius: 50px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#btn__letter {
+    background: var(--color-heart);
+    border: 3px solid #000;
+    padding: 10px 25px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#btn__letter:hover { transform: scale(1.1); background: #0091ea; }
+
+/* THE IMAGE CIRCLE */
+.content .right .image {
+    width: clamp(250px, 40vw, 400px);
+    height: clamp(250px, 40vw, 400px);
     border-radius: 50%;
     border: 6px solid #000;
     overflow: hidden;
     position: relative;
-    margin-top: 30px;
+    z-index: 2;
 }
 
-.right .image img {
+.content .right .image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -102,56 +125,58 @@ body {
 .name {
     background: var(--color-text-pink);
     border: 3px solid #000;
-    padding: 10px 30px;
+    padding: 5px 30px;
     border-radius: 50px;
     color: #fff;
     font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem;
-    margin-top: -25px; /* Pulls it up to overlap the image slightly */
-    z-index: 10;
+    font-size: 1.5rem;
+    margin-top: -20px;
+    z-index: 3;
 }
 
-/* DECORATIONS */
+/* FLOATING BIRTHDAY CIRCLE */
 .cricle {
     position: absolute;
-    top: 0;
-    right: 10%; /* Positions it relative to the image */
-    z-index: 11;
-    transform: scale(0.8);
+    top: -20px;
+    right: -20px;
+    z-index: 4;
 }
 
 .text__cricle {
-    width: 100px; height: 100px;
+    width: 100px;
+    height: 100px;
     background: var(--color-text-pink);
-    border: 3px solid #000;
+    border: 4px solid #000;
     border-radius: 50%;
-    animation: rotate 10s linear infinite;
-}
-
-@keyframes rotate { to { transform: rotate(360deg); } }
-
-/* Fix pink images to blue */
-.balloon_one, .balloon_two, [src*="decorate.png"] {
-    filter: hue-rotate(180deg) brightness(1.1);
-    position: absolute;
-}
-
-.balloon_one { left: 10%; top: 20%; width: 80px; }
-.balloon_two { right: 10%; bottom: 10%; width: 80px; }
-
-/* Flags at top */
-.flag__birthday {
-    width: 100%;
     display: flex;
-    justify-content: space-between;
-    position: absolute;
-    top: 0;
+    justify-content: center;
+    align-items: center;
+    animation: rotateCricle 10s linear infinite;
 }
 
-.flag__birthday img { width: 150px; }
+@keyframes rotateCricle { to { transform: rotate(360deg); } }
 
-/* Desktop Adjustment */
-@media screen and (min-width: 800px) {
-    .content { flex-direction: row; padding-top: 100px; }
-    .left, .right { width: 50% !important; }
+/* MOBILE RESPONSIVE FIX */
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column; /* Stacks everything in one center line */
+        padding-top: 4rem;
+        gap: 20px;
+    }
+    
+    .title { order: 1; }
+    .date__of__birth { order: 2; }
+    #btn__letter { order: 3; }
+    .content .right { order: 4; margin-top: 20px; }
+
+    .cricle {
+        right: 0;
+        top: -40px;
+        transform: scale(0.8);
+    }
+}
+
+#copy {
+    padding: 20px;
+    text-align: center;
 }
