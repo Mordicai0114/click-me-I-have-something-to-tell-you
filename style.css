@@ -19,7 +19,7 @@
 body {
     background-color: var(--color-pink);
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevents horizontal scrolling/messiness */
     font-family: "Sriracha", cursive;
 }
 
@@ -28,8 +28,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Horizontally center everything */
-    justify-content: center; /* Vertically center everything */
+    align-items: center; /* Horizontally centers everything */
+    justify-content: center; /* Vertically centers everything */
     padding: 20px;
     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent), 
                       linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .5) 25%, rgba(255, 255, 255, .5) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .5) 75%, rgba(255, 255, 255, .5) 76%, transparent 77%, transparent);
@@ -38,15 +38,14 @@ body {
 
 .content {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Force stack for mobile */
     align-items: center;
     width: 100%;
-    max-width: 500px;
-    gap: 15px;
-    z-index: 10;
+    max-width: 400px; /* Constrain width so it doesn't look messy */
+    gap: 20px;
 }
 
-/* Text and Button Section */
+/* LEFT SIDE: Text/Buttons */
 .left {
     display: flex;
     flex-direction: column;
@@ -56,10 +55,10 @@ body {
 
 .title {
     font-family: "Titan One", sans-serif;
-    font-size: clamp(2.2rem, 10vw, 4rem);
+    font-size: clamp(2.2rem, 10vw, 3.5rem); /* Auto-sizes for phone screens */
     text-align: center;
     line-height: 1.1;
-    margin-bottom: 10px;
+    white-space: nowrap; /* Prevents "Happy" and "Birthday" from splitting weirdly */
 }
 
 .title .happy { color: #fff; text-shadow: 3px 3px 0 #000; }
@@ -67,35 +66,34 @@ body {
 
 .date__of__birth, #btn__letter {
     width: 100%;
-    max-width: 280px;
+    max-width: 260px;
     height: 50px;
     border: 3px solid #000;
     border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 8px 0;
     color: #fff;
     font-weight: bold;
     text-decoration: none;
     background-color: var(--color-text-pink);
-    margin-top: 10px;
 }
 
 #btn__letter { background-color: var(--color-heart); }
 
-/* Image Section */
+/* RIGHT SIDE: The Photo */
 .right {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     width: 100%;
-    margin-top: 20px;
 }
 
 .right .image {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
     border: 6px solid #000;
     overflow: hidden;
@@ -117,20 +115,21 @@ body {
     color: #fff;
     font-family: 'Dancing Script', cursive;
     font-size: 1.8rem;
-    margin-top: -25px;
-    z-index: 15;
+    margin-top: -25px; /* Neatly overlaps bottom of photo */
+    z-index: 10;
 }
 
-/* Decorations stay near the center content */
+/* DECORATIONS */
 .cricle {
     position: absolute;
-    top: 0;
-    right: 5%;
-    transform: scale(0.8);
+    top: -10px;
+    right: 0;
+    transform: scale(0.7);
+    z-index: 5;
 }
 
 .text__cricle {
-    width: 90px; height: 90px;
+    width: 100px; height: 100px;
     background: var(--color-text-pink);
     border: 3px solid #000;
     border-radius: 50%;
@@ -139,21 +138,17 @@ body {
 
 @keyframes rotate { to { transform: rotate(360deg); } }
 
-.balloon_one, .balloon_two {
-    position: absolute;
-    width: 70px;
-    filter: hue-rotate(180deg);
+/* Fix pink colors to blue */
+.balloon_one, .balloon_two, [src*="decorate.png"] {
+    filter: hue-rotate(180deg) brightness(1.1);
 }
 
-.balloon_one { left: -20px; top: 10%; }
-.balloon_two { right: -20px; bottom: 20%; }
-
-/* Desktop Adjustment */
+/* DESKTOP LAYOUT (Side-by-side) */
 @media screen and (min-width: 800px) {
     .content {
         flex-direction: row;
         max-width: 900px;
-        gap: 50px;
+        gap: 60px;
     }
     .left, .right { width: 50%; }
 }
